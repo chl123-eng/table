@@ -5,15 +5,34 @@
     <div class="wrap"><input class="inputTask" type="text" placeholder="输入" /></div>
     <div class="wrap">
       <span class="tip">2个任务未完成</span>
-      <button class="btn" v-for="(item, index) in taskTarget" :key="index" @click="select">
-        {{ item }}
-      </button>
+      <div class="btn" v-for="(item, index) in taskTarget" :key="index">
+        <button :key="item.k" @click="changeType(item.type)">{{ item.name }}</button>
+      </div>
     </div>
     <div class="taskList wrap">任务列表:</div>
     <div class="wrap">
-      <div class="task" :key="index" v-for="(item, index) in allTasks">
-        <input type="checkbox" :key="item.k" v-model="item.k" @click="add(index)" />
-        <span :class="{ taskActive: item.k }">{{ item.taskName }}</span>
+      <div class="task" :key="index" v-for="(item, index) in newTask.objs">
+        <input type="checkbox" :key="item.b" v-model="item.b" @click="add(index)" />
+        <span :class="{ taskActive: item.b }">{{ item.taskName }}</span>
+      </div>
+      <!-- 谢树宏新增 -->
+      <div v-show="type === 'all'">
+        <div class="task" :key="index" v-for="(item, index) in all">
+          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="add(index)" />
+          <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
+        </div>
+      </div>
+      <div v-show="type === 'finish'">
+        <div class="task" :key="index" v-for="(item, index) in finish">
+          <input type="checkbox" :key="item.checked" v-model="item.checked" />
+          <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
+        </div>
+      </div>
+      <div v-show="type === 'unfinish'">
+        <div class="task" :key="index" v-for="(item, index) in unfinish">
+          <input type="checkbox" :key="item.checked" v-model="item.checked" />
+          <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -25,78 +44,134 @@ export default {
   components: {},
   data() {
     return {
-      taskTarget: ['所有任务', '未完成任务', '完成的任务'],
-      allTasks: [
+      currentK: 0,
+      type: 'all',
+      taskTarget: [
         {
-          k: false,
-          taskName: '学习vue',
+          type: 'all',
+          k: 1,
+          name: '所有任务',
         },
         {
-          k: false,
-          taskName: '移动端',
+          type: 'unfinish',
+          k: 2,
+          name: '未完成任务',
         },
         {
-          k: false,
-          taskName: '西安一日游',
+          type: 'finish',
+          k: 3,
+          name: '已完成任务',
         },
       ],
-      finished: [],
-      noFinished: [],
+      newTask: {
+        k: '',
+        objs: [
+          // {
+          //     b: "",
+          //     taskName: ""
+          // }
+        ],
+      },
+      tasks: [
+        {
+          k: 1,
+          objs: [
+            {
+              b: false,
+              taskName: '学习vue',
+            },
+            {
+              b: false,
+              taskName: '移动端',
+            },
+            {
+              b: false,
+              taskName: '西安一日游',
+            },
+          ],
+        },
+        {
+          k: 2,
+          objs: [
+            {
+              b: false,
+              taskName: '学习vue',
+            },
+            {
+              b: false,
+              taskName: '移动端',
+            },
+          ],
+        },
+        {
+          k: 3,
+          objs: [
+            {
+              b: false,
+              taskName: '学习vue',
+            },
+          ],
+        },
+      ],
+      all: [
+        {
+          name: '全部任务',
+          checked: false,
+        },
+      ],
+      finish: [
+        {
+          name: '已完成任务',
+          checked: false,
+        },
+      ],
+      unfinish: [
+        {
+          name: '未完成任务',
+          checked: false,
+        },
+      ],
     };
   },
   methods: {
+    changeType(type) {
+      this.type = type;
+    },
     add(index) {
       this.allTasks[index].k = !this.allTasks[index].k;
-      // var newObj = {
-      //     k: "",
-      //     taskName: ""
-      // };
-      // if(this.allTasks[index].k){
-      //     newObj.k = true;
-      //     newObj.taskName = this.allTasks[index].taskName
-      //     this.finished.push(newObj);
-      // }else{
-      //     newObj.k = false;
-      //     newObj.taskName = this.allTasks[index].taskName
-      //     this.noFinished.push(newObj);
-      // }
-
-      // for(var i = 0 ;i < this.allTasks.length; i++){
-      //     if(this.allTasks[i].k == false){
-      //         newObj.k = false;
-      //         newObj.taskName = this.allTasks[i].taskName
-      //         this.noFinished.push(newObj);
-      //         console.log(this.noFinished)
-      //     }else{
-      //         newObj.k = true;
-      //         newObj.taskName = this.allTasks[i].taskName
-      //         this.finished.push(newObj);
-      //         console.log(this.finished)
-      //     }
-
-      // }
     },
 
-    select() {
-      var newObj = {
-        k: '',
-        taskName: '',
-      };
-      for (var i = 0; i < this.allTasks.length; i++) {
-        (function(index) {
-          if (this.allTasks[index].k == false) {
-            newObj.k = false;
-            newObj.taskName = this.allTasks[index].taskName;
-            this.noFinished.push(newObj);
-          } else {
-            newObj.k = true;
-            newObj.taskName = this.allTasks[index].taskName;
-            this.finished.push(newObj);
-          }
-        })(i);
+    // select() {
+    //      var newObj = {
+    //         k: "",
+    //         taskName: ""
+    //     };
+    //     for(var i = 0 ;i < this.allTasks.length; i++){
+    //         (function(index){
+    //             if(this.allTasks[index].k == false){
+    //                 newObj.k = false;
+    //                 newObj.taskName = this.allTasks[index].taskName
+    //                 this.noFinished.push(newObj);
+    //             }
+    //             else{
+    //                 newObj.k = true;
+    //                 newObj.taskName = this.allTasks[index].taskName
+    //                 this.finished.push(newObj);
+    //             }
+    //         })(i)
+    //     }
+    //     console.log(this.finished)
+    //     console.log(this.noFinished)
+    // }
+    showK(index) {
+      this.newTask.k = this.taskTarget[index].k;
+      // console.log(this.newTask.k)
+      for (var i = 0; i < this.tasks.length; i++) {
+        if (this.newTask.k == this.tasks[i].k) {
+          this.newTask.objs = this.tasks[i].objs;
+        }
       }
-      console.log(this.finished);
-      console.log(this.noFinished);
+      console.log(this.newTask);
     },
   },
 };
