@@ -5,10 +5,10 @@
     <div class="wrap">
       <input class="inputTask" type="text" placeholder="输入" v-model="msg" @keyup.enter="enter(msg, all)"/>
     </div>
-    <div class="wrap">
+    <div class="wrap taskName">
       <span class="tip">2个任务未完成</span>
-      <div class="btn" v-for="(item, index) in taskTarget" :key="index">
-        <button :key="item.k" @click="changeType(item.type)">{{ item.name }}</button>
+      <div class="btns">
+        <div class="btn" v-for="(item, index) in taskTarget" :key="index" @click="changeIndex(index)" :class="currentIndex === index ? 'taskTargetActie': ''"><button :key="item.k"  @click="changeType(item.type)">{{ item.name }}</button></div>
       </div>
     </div>
     <div class="taskList wrap">任务列表:</div>
@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       currentK: 0,
+      currentIndex: 0,
       type: 'all',
       taskTarget: [
         {
@@ -89,7 +90,13 @@ export default {
   methods: {
     changeType(type) {
       this.type = type;
+      this.currentIndex = index 
+      console.log(this.currentIndex)
     },
+    changeIndex(index) {
+      this.currentIndex = index
+    },
+
     allAdd(index) {
       this.all[index].k = !this.all[index].k;
       if(this.all[index].k){
@@ -124,6 +131,10 @@ export default {
 </script>
 
 <style scoped>
+*{
+  margin: 0;
+  padding: 0;
+}
 .header {
   height: 50px;
   background: #cc5545;
@@ -149,13 +160,21 @@ export default {
 .tip {
   color: #cc5545;
 }
+
+.taskName {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btns{
+  display: flex;
+  justify-content: space-between;
+}
 .btn {
-  float: right;
+  /* float: right; */
   height: 30px;
   line-height: 30px;
-  border: 1px solid black;
   margin: 0 10px;
-  border: none;
 }
 .taskList {
   font: 18px bold;
@@ -168,5 +187,9 @@ export default {
 .taskActive {
   text-decoration: line-through;
   color: gray;
+}
+
+.taskTargetActie {
+  border:2px solid pink;
 }
 </style>
