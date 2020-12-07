@@ -3,12 +3,14 @@
     <div class="header"><div class="wrap planList">任务计划列表</div></div>
     <div class="wrap addTask">添加任务:</div>
     <div class="wrap">
-      <input class="inputTask" type="text" placeholder="输入" v-model="msg" @keyup.enter="enter(msg, all)"/>
+      <input class="inputTask" type="text" placeholder="输入" v-model="msg" @keyup.enter="enter()"/>
     </div>
     <div class="wrap taskName">
       <span class="tip">2个任务未完成</span>
       <div class="btns">
-        <div class="btn" v-for="(item, index) in taskTarget" :key="index" @click="changeIndex(index)" :class="currentIndex === index ? 'taskTargetActie': ''"><button :key="item.k"  @click="changeType(item.type)">{{ item.name }}</button></div>
+        <div class="btn" v-for="(item, index) in taskTarget" :key="index" @click="changeIndex(index)" :class="currentIndex === index ? 'taskTargetActie': ''">
+          <button :key="item.k"  @click="changeType(item.type)">{{ item.name }}</button>
+        </div>
       </div>
     </div>
     <div class="taskList wrap">任务列表:</div>
@@ -45,6 +47,7 @@ export default {
     return {
       currentK: 0,
       currentIndex: 0,
+      msg: "",
       type: 'all',
       taskTarget: [
         {
@@ -65,23 +68,27 @@ export default {
       ],
       
       newObj: {
+        id: "",
         name: "",
         checked: ""
       },
       
       all: [
-        {
-          name: '学习vue',
-          checked: false,
-        },
-        {
-          name: '移动端',
-          checked: false,
-        },
-        {
-          name: '西安一日游',
-          checked: false,
-        }
+        // {
+        //   id: 0,
+        //   name: '学习vue',
+        //   checked: false,
+        // },
+        // {
+        //   id: 1,
+        //   name: '移动端',
+        //   checked: false,
+        // },
+        // {
+        //   id: 3,
+        //   name: '西安一日游',
+        //   checked: false,
+        // }
       ],
       finish: [],
       unfinish: [],
@@ -90,8 +97,6 @@ export default {
   methods: {
     changeType(type) {
       this.type = type;
-      this.currentIndex = index 
-      console.log(this.currentIndex)
     },
     changeIndex(index) {
       this.currentIndex = index
@@ -120,11 +125,13 @@ export default {
         this.finish.push(this.unfinish[index])
       }
     },
-    enter(msg,all){
+    enter(){
+      this.newObj.id = this.all.length + 1
       this.newObj.checked = false;
-      this.newObj.name = msg;
+      this.newObj.name = this.msg;
       this.all.push(this.newObj)
       this.unfinish.push(this.newObj)
+      console.log(this.unfinish)
     }
   },
 };
