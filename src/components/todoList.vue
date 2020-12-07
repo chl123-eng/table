@@ -26,6 +26,7 @@
             type="checkbox"
             :key="item.checked"
             v-model="item.checked"
+            @change="change"
             @click="allAdd(index)"
           />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
@@ -142,6 +143,9 @@ export default {
       this.all.push(item);
       console.log(this.all);
       this.unfinish.push(this.newObj);
+    },
+    change(e) {
+      console.log(e);
     },
   },
 };
