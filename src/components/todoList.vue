@@ -8,19 +8,14 @@
         type="text"
         placeholder="输入"
         v-model="msg"
-        @keyup.enter="enter('all')"
+        @keyup.enter="enter(msg, all)"
       />
     </div>
     <div class="wrap taskName">
       <span class="tip">2个任务未完成</span>
       <div class="btns">
-        <div
-          class="btn"
-          v-for="(item, index) in taskTarget"
-          :key="index"
-          @click="changeIndex(index)"
-          :class="currentIndex === index ? 'taskTargetActie' : ''"
-        >
+        <div class="btn" v-for="(item, index) in taskTarget" :key="index" 
+        :class= "currentIndex === index ? 'taskTargetActie': '' " @click="changeIndex(index)">
           <button :key="item.k" @click="changeType(item.type)">{{ item.name }}</button>
         </div>
       </div>
@@ -34,21 +29,21 @@
             type="checkbox"
             :key="item.checked"
             v-model="item.checked"
-            @click="allAdd(index)"
+            @change="e => change(e, index)"
           />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
         </div>
       </div>
       <div v-show="type === 'finish'">
         <div class="task" :key="index" v-for="(item, index) in finish">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="fAdd(index)"/>
-<!-- 第一个问题 -->
+          <input type="checkbox" :key="item.checked" v-model="item.checked" @change="change"/>
+          <!-- 第一个问题 -->
           <span :class="{ taskActive: !item.checked }">{{ item.name }}</span>
         </div>
       </div>
       <div v-show="type === 'unfinish'">
         <div class="task" :key="index" v-for="(item, index) in unfinish">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="ufAdd(index)" />
+          <input type="checkbox" :key="item.checked" v-model="item.checked"  @change="change"/>
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
         </div>
       </div>
@@ -62,9 +57,11 @@ export default {
   components: {},
   data() {
     return {
-      currentK: 0,
+      msg: '',
       currentIndex: 0,
+      currentK: 0,
       type: 'all',
+      ids: [],
       taskTarget: [
         {
           type: 'all',
@@ -98,64 +95,77 @@ export default {
           checked: false,
         },
         {
-          id: 3,
+          id: 2,
           name: '西安一日游',
+          checked: false,
+        },
+      ],
+      finish: [
+        
+      ],
+      unfinish: [
+        {
+          id: 1,
+          name: '移动端',
           checked: false,
         }
       ],
-      finish: [],
-      unfinish: [],
     };
   },
   methods: {
     changeType(type) {
       this.type = type;
-      this.currentIndex = index;
-      console.log(this.currentIndex);
     },
     changeIndex(index) {
       this.currentIndex = index;
     },
-    allAdd(index) {
-      this.all[index].k = !this.all[index].k;
-      if (this.all[index].k) {
-        this.finish.push(this.all[index]);
-      }
-      for (var i = 0; i < this.all.length; i++) {
-        if (!this.all[i].k) {
-          this.unfinish.push(this.all[i]);
+    
+    enter() {
+      const item = {
+        id: this.all.length + 1,
+        checked: false,
+        name: this.msg,
+      };
+      this.all.push(item);
+      this.unfinish.push(item);
+    },
+
+    change(e, index) {
+      if(e.target.checked) {
+        if(this.type == "all") {
+          this.finish.push(this.all[index])
+          const id = this.all[index].id
+          let cindex;
+          const arr = this.unfinish.forEach((item, index) => {
+            if(item.id === id) {
+              cindex = index
+            }
+          })
+          console.log(cindex)
+          this.unfinish.splice(index, 1)
+          console.log(this.unfinish)
+          // this.ids.push(this.all[index].id)
+          // for(var i = 0; i < this.all.length; i++){
+          //   for(var j = 0 ; j < this.ids.length; j++){
+          //     if(this.all[i].id != this.ids[j]){
+          //       this.unfinish.push(this.all[i])
+          //     }
+          //   }
+          // }
+          console.log(this.unfinish)
+        }else if (this.type == "finish"){
+
+        }else{
+
         }
       }
-    },
-    fAdd(index){
-      // this.finish[index].k = !this.finish[index].k;
-      //this.finish[index].remove();
-      this.finish.splice(index,1)
-      this.unfinish.push(this.finish[index])
-    },
-    ufAdd(index){
-      // this.unfinish[index].k = !this.unfinish[index].k;
-      if(this.unfinish[index].k){
-        this.finish.push(this.unfinish[index])
-      }
-      console.log(this.finish)
-    },
-    enter(){
-      this.newObj.id = this.all.length + 1
-      this.newObj.checked = false;
-      this.newObj.name = this.msg;
-      this.all.push(this.newObj)
-      this.unfinish.push(this.newObj)
     }
+    
   },
 };
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
 .header {
   height: 50px;
   background: #cc5545;
@@ -190,10 +200,12 @@ export default {
   justify-content: space-between;
 }
 .btn {
-  /* float: right; */
+  float: right;
   height: 30px;
   line-height: 30px;
+  border: 1px solid black;
   margin: 0 10px;
+  border: none;
 }
 .taskList {
   font: 18px bold;
