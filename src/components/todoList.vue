@@ -3,12 +3,26 @@
     <div class="header"><div class="wrap planList">任务计划列表</div></div>
     <div class="wrap addTask">添加任务:</div>
     <div class="wrap">
-      <input class="inputTask" type="text" placeholder="输入" v-model="msg" @keyup.enter="enter(msg, all)"/>
+      <input
+        class="inputTask"
+        type="text"
+        placeholder="输入"
+        v-model="msg"
+        @keyup.enter="enter('all')"
+      />
     </div>
     <div class="wrap taskName">
       <span class="tip">2个任务未完成</span>
       <div class="btns">
-        <div class="btn" v-for="(item, index) in taskTarget" :key="index" @click="changeIndex(index)" :class="currentIndex === index ? 'taskTargetActie': ''"><button :key="item.k"  @click="changeType(item.type)">{{ item.name }}</button></div>
+        <div
+          class="btn"
+          v-for="(item, index) in taskTarget"
+          :key="index"
+          @click="changeIndex(index)"
+          :class="currentIndex === index ? 'taskTargetActie' : ''"
+        >
+          <button :key="item.k" @click="changeType(item.type)">{{ item.name }}</button>
+        </div>
       </div>
     </div>
     <div class="taskList wrap">任务列表:</div>
@@ -16,20 +30,25 @@
       <!-- 谢树宏新增 -->
       <div v-show="type === 'all'">
         <div class="task" :key="index" v-for="(item, index) in all">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="allAdd(index)" />
+          <input
+            type="checkbox"
+            :key="item.checked"
+            v-model="item.checked"
+            @click="allAdd(index)"
+          />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
         </div>
       </div>
       <div v-show="type === 'finish'">
         <div class="task" :key="index" v-for="(item, index) in finish">
-          <input type="checkbox" :key="item.checked" v-model="!item.checked" @click="fAdd(index)"/>
-<!-- 第一个问题 -->
+          <input type="checkbox" :key="item.checked" v-model="!item.checked" @click="fAdd(index)" />
+          <!-- 第一个问题 -->
           <span :class="{ taskActive: !item.checked }">{{ item.name }}</span>
         </div>
       </div>
       <div v-show="type === 'unfinish'">
         <div class="task" :key="index" v-for="(item, index) in unfinish">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="ufAdd(index)"/>
+          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="ufAdd(index)" />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
         </div>
       </div>
@@ -63,12 +82,12 @@ export default {
           name: '已完成任务',
         },
       ],
-      
+
       newObj: {
-        name: "",
-        checked: ""
+        name: '',
+        checked: '',
       },
-      
+
       all: [
         {
           name: '学习vue',
@@ -81,7 +100,7 @@ export default {
         {
           name: '西安一日游',
           checked: false,
-        }
+        },
       ],
       finish: [],
       unfinish: [],
@@ -90,48 +109,51 @@ export default {
   methods: {
     changeType(type) {
       this.type = type;
-      this.currentIndex = index 
-      console.log(this.currentIndex)
+      this.currentIndex = index;
+      console.log(this.currentIndex);
     },
     changeIndex(index) {
-      this.currentIndex = index
+      this.currentIndex = index;
     },
 
     allAdd(index) {
       this.all[index].k = !this.all[index].k;
-      if(this.all[index].k){
-        this.finish.push(this.all[index])
+      if (this.all[index].k) {
+        this.finish.push(this.all[index]);
       }
-      for(var i = 0;i < this.all.length; i++){
-        if(!this.all[i].k){
-          this.unfinish.push(this.all[i])
+      for (var i = 0; i < this.all.length; i++) {
+        if (!this.all[i].k) {
+          this.unfinish.push(this.all[i]);
         }
       }
     },
-    fAdd(index){
+    fAdd(index) {
       this.finish[index].k = !this.finish[index].k;
-      if(!this.finish[index].k){
-        this.unfinish.push(this.finish[index])
+      if (!this.finish[index].k) {
+        this.unfinish.push(this.finish[index]);
       }
     },
-    ufAdd(index){
+    ufAdd(index) {
       this.unfinish[index].k = !this.unfinish[index].k;
-      if(this.unfinish[index].k){
-        this.finish.push(this.unfinish[index])
+      if (this.unfinish[index].k) {
+        this.finish.push(this.unfinish[index]);
       }
     },
-    enter(msg,all){
-      this.newObj.checked = false;
-      this.newObj.name = msg;
-      this.all.push(this.newObj)
-      this.unfinish.push(this.newObj)
-    }
+    enter(type) {
+      const obj = {
+        id: this.all.length - 1,
+        name: this.msg,
+        checked: false,
+      };
+
+      this.unfinish.push(obj);
+    },
   },
 };
 </script>
 
 <style scoped>
-*{
+* {
   margin: 0;
   padding: 0;
 }
@@ -166,7 +188,7 @@ export default {
   justify-content: space-between;
 }
 
-.btns{
+.btns {
   display: flex;
   justify-content: space-between;
 }
@@ -190,6 +212,6 @@ export default {
 }
 
 .taskTargetActie {
-  border:2px solid pink;
+  border: 2px solid pink;
 }
 </style>
