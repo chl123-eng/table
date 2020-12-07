@@ -82,22 +82,8 @@ export default {
           checked: false,
         }
       ],
-      finish: [
-        //{
-        //   name: '移动端',
-        //   checked: true,
-        // },
-        // {
-        //   name: '西安一日游',
-        //   checked: true,
-        // }
-      ],
-      unfinish: [
-        // {
-        //   name: '学习vue',
-        //   checked: false,
-        // },
-      ],
+      finish: [],
+      unfinish: [],
     };
   },
   methods: {
