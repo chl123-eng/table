@@ -82,12 +82,10 @@ export default {
           name: '已完成任务',
         },
       ],
-
       newObj: {
         name: '',
         checked: '',
       },
-
       all: [
         {
           id: 0,
@@ -118,7 +116,6 @@ export default {
     changeIndex(index) {
       this.currentIndex = index;
     },
-
     allAdd(index) {
       this.all[index].k = !this.all[index].k;
       if (this.all[index].k) {
@@ -184,12 +181,10 @@ export default {
 .tip {
   color: #cc5545;
 }
-
 .taskName {
   display: flex;
   justify-content: space-between;
 }
-
 .btns {
   display: flex;
   justify-content: space-between;
@@ -212,7 +207,6 @@ export default {
   text-decoration: line-through;
   color: gray;
 }
-
 .taskTargetActie {
   border: 2px solid pink;
 }
