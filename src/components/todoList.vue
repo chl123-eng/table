@@ -3,13 +3,25 @@
     <div class="header"><div class="wrap planList">任务计划列表</div></div>
     <div class="wrap addTask">添加任务:</div>
     <div class="wrap">
-      <input class="inputTask" type="text" placeholder="输入" v-model="msg" @keyup.enter="enter()"/>
+      <input
+        class="inputTask"
+        type="text"
+        placeholder="输入"
+        v-model="msg"
+        @keyup.enter="enter('all')"
+      />
     </div>
     <div class="wrap taskName">
       <span class="tip">2个任务未完成</span>
       <div class="btns">
-        <div class="btn" v-for="(item, index) in taskTarget" :key="index" @click="changeIndex(index)" :class="currentIndex === index ? 'taskTargetActie': ''">
-          <button :key="item.k"  @click="changeType(item.type)">{{ item.name }}</button>
+        <div
+          class="btn"
+          v-for="(item, index) in taskTarget"
+          :key="index"
+          @click="changeIndex(index)"
+          :class="currentIndex === index ? 'taskTargetActie' : ''"
+        >
+          <button :key="item.k" @click="changeType(item.type)">{{ item.name }}</button>
         </div>
       </div>
     </div>
@@ -18,7 +30,12 @@
       <!-- 谢树宏新增 -->
       <div v-show="type === 'all'">
         <div class="task" :key="index" v-for="(item, index) in all">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="allAdd(index)" />
+          <input
+            type="checkbox"
+            :key="item.checked"
+            v-model="item.checked"
+            @click="allAdd(index)"
+          />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
         </div>
       </div>
@@ -31,7 +48,7 @@
       </div>
       <div v-show="type === 'unfinish'">
         <div class="task" :key="index" v-for="(item, index) in unfinish">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="ufAdd(index)"/>
+          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="ufAdd(index)" />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
         </div>
       </div>
@@ -47,7 +64,6 @@ export default {
     return {
       currentK: 0,
       currentIndex: 0,
-      msg: "",
       type: 'all',
       taskTarget: [
         {
@@ -66,13 +82,12 @@ export default {
           name: '已完成任务',
         },
       ],
-      
+
       newObj: {
-        id: "",
-        name: "",
-        checked: ""
+        name: '',
+        checked: '',
       },
-      
+
       all: [
         {
           id: 0,
@@ -97,19 +112,21 @@ export default {
   methods: {
     changeType(type) {
       this.type = type;
+      this.currentIndex = index;
+      console.log(this.currentIndex);
     },
     changeIndex(index) {
-      this.currentIndex = index
+      this.currentIndex = index;
     },
 
     allAdd(index) {
       this.all[index].k = !this.all[index].k;
-      if(this.all[index].k){
-        this.finish.push(this.all[index])
+      if (this.all[index].k) {
+        this.finish.push(this.all[index]);
       }
-      for(var i = 0;i < this.all.length; i++){
-        if(!this.all[i].k){
-          this.unfinish.push(this.all[i])
+      for (var i = 0; i < this.all.length; i++) {
+        if (!this.all[i].k) {
+          this.unfinish.push(this.all[i]);
         }
       }
     },
@@ -138,7 +155,7 @@ export default {
 </script>
 
 <style scoped>
-*{
+* {
   margin: 0;
   padding: 0;
 }
@@ -173,7 +190,7 @@ export default {
   justify-content: space-between;
 }
 
-.btns{
+.btns {
   display: flex;
   justify-content: space-between;
 }
@@ -197,6 +214,6 @@ export default {
 }
 
 .taskTargetActie {
-  border:2px solid pink;
+  border: 2px solid pink;
 }
 </style>
