@@ -145,7 +145,6 @@ export default {
         name: this.msg,
         checked: false,
       };
-
       this.unfinish.push(obj);
     },
   },
