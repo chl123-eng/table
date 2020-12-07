@@ -8,21 +8,13 @@
         type="text"
         placeholder="输入"
         v-model="msg"
-        @keyup.enter="enter('all')"
+        @keyup.enter="enter(msg, all)"
       />
     </div>
-    <div class="wrap taskName">
+    <div class="wrap">
       <span class="tip">2个任务未完成</span>
-      <div class="btns">
-        <div
-          class="btn"
-          v-for="(item, index) in taskTarget"
-          :key="index"
-          @click="changeIndex(index)"
-          :class="currentIndex === index ? 'taskTargetActie' : ''"
-        >
-          <button :key="item.k" @click="changeType(item.type)">{{ item.name }}</button>
-        </div>
+      <div class="btn" v-for="(item, index) in taskTarget" :key="index">
+        <button :key="item.k" @click="changeType(item.type)">{{ item.name }}</button>
       </div>
     </div>
     <div class="taskList wrap">任务列表:</div>
@@ -63,7 +55,6 @@ export default {
   data() {
     return {
       currentK: 0,
-      currentIndex: 0,
       type: 'all',
       taskTarget: [
         {
@@ -109,13 +100,7 @@ export default {
   methods: {
     changeType(type) {
       this.type = type;
-      this.currentIndex = index;
-      console.log(this.currentIndex);
     },
-    changeIndex(index) {
-      this.currentIndex = index;
-    },
-
     allAdd(index) {
       this.all[index].k = !this.all[index].k;
       if (this.all[index].k) {
@@ -139,23 +124,18 @@ export default {
         this.finish.push(this.unfinish[index]);
       }
     },
-    enter(type) {
-      const obj = {
-        id: this.all.length - 1,
-        name: this.msg,
-        checked: false,
-      };
-      this.unfinish.push(obj);
+    enter(msg, all) {
+      this.newObj.checked = false;
+      this.newObj.name = msg;
+      console.log(this.newObj);
+      this.all.push(this.newObj);
+      this.unfinish.push(this.newObj);
     },
   },
 };
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
 .header {
   height: 50px;
   background: #cc5545;
@@ -181,21 +161,13 @@ export default {
 .tip {
   color: #cc5545;
 }
-
-.taskName {
-  display: flex;
-  justify-content: space-between;
-}
-
-.btns {
-  display: flex;
-  justify-content: space-between;
-}
 .btn {
-  /* float: right; */
+  float: right;
   height: 30px;
   line-height: 30px;
+  border: 1px solid black;
   margin: 0 10px;
+  border: none;
 }
 .taskList {
   font: 18px bold;
@@ -208,9 +180,5 @@ export default {
 .taskActive {
   text-decoration: line-through;
   color: gray;
-}
-
-.taskTargetActie {
-  border: 2px solid pink;
 }
 </style>
