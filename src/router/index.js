@@ -15,21 +15,21 @@ export default new Router({
       name: 'table',
       component: table
     },
-    {
-      path: '/box',
-      name: 'box',
-      component: box
-    },
-    {
-      path: '/third',
-      name: 'third',
-      component: third
-    },
-    {
-      path: '/four',
-      name: 'four',
-      component: four
-    },
+    // {
+    //   path: '/box',
+    //   name: 'box',
+    //   component: box
+    // },
+    // {
+    //   path: '/third',
+    //   name: 'third',
+    //   component: third
+    // },
+    // {
+    //   path: '/four',
+    //   name: 'four',
+    //   component: four
+    // },
     {
       path: '/todoList',
       name: 'todoList',

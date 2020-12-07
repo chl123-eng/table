@@ -33,7 +33,7 @@
       </div>
       <div v-show="type === 'finish'">
         <div class="task" :key="index" v-for="(item, index) in finish">
-          <input type="checkbox" :key="item.checked" v-model="!item.checked" @click="fAdd(index)" />
+          <input type="checkbox" :key="item.checked" v-model="item.checked" @click="fAdd(index)" />
           <!-- 第一个问题 -->
           <span :class="{ taskActive: !item.checked }">{{ item.name }}</span>
         </div>
@@ -54,6 +54,7 @@ export default {
   components: {},
   data() {
     return {
+      msg: '',
       currentK: 0,
       type: 'all',
       taskTarget: [
@@ -81,14 +82,17 @@ export default {
 
       all: [
         {
+          id: 0,
           name: '学习vue',
           checked: false,
         },
         {
+          id: 1,
           name: '移动端',
           checked: false,
         },
         {
+          id: 3,
           name: '西安一日游',
           checked: false,
         },
@@ -113,22 +117,30 @@ export default {
       }
     },
     fAdd(index) {
-      this.finish[index].k = !this.finish[index].k;
-      if (!this.finish[index].k) {
-        this.unfinish.push(this.finish[index]);
-      }
+      // this.finish[index].k = !this.finish[index].k;
+      //this.finish[index].remove();
+      this.finish.splice(index, 1);
+      this.unfinish.push(this.finish[index]);
     },
     ufAdd(index) {
-      this.unfinish[index].k = !this.unfinish[index].k;
+      // this.unfinish[index].k = !this.unfinish[index].k;
       if (this.unfinish[index].k) {
         this.finish.push(this.unfinish[index]);
       }
+      console.log(this.finish);
     },
-    enter(msg, all) {
-      this.newObj.checked = false;
-      this.newObj.name = msg;
-      console.log(this.newObj);
-      this.all.push(this.newObj);
+    enter() {
+      const item = {
+        id: this.all.length + 1,
+        checked: false,
+        name: this.msg,
+      };
+      // this.newObj.id = this.all.length + 1;
+      // this.newObj.checked = false;
+      // this.newObj.name = this.msg;
+      console.log(this.all.length);
+      this.all.push(item);
+      console.log(this.all);
       this.unfinish.push(this.newObj);
     },
   },
