@@ -192,7 +192,6 @@ export default {
     },
 
     remove(type, index) {
-      // this.all.splice(index, 1)
       if(this.type == "all"){
         const id = this.all[index].id
         const arr1 = this.unfinish.forEach((item, index) => {
