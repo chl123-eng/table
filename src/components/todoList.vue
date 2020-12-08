@@ -41,14 +41,14 @@
       </div>
       <div v-show="type === 'finish'">
         <div class="task" :key="index" v-for="(item, index) in finish">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @change="change" />
+          <input type="checkbox" :key="item.checked" v-model="item.checked" @change="e => change(e, index)" />
           <!-- 第一个问题 -->
           <span :class="{ taskActive: !item.checked }">{{ item.name }}</span>
         </div>
       </div>
       <div v-show="type === 'unfinish'">
         <div class="task" :key="index" v-for="(item, index) in unfinish">
-          <input type="checkbox" :key="item.checked" v-model="item.checked" @change="change" />
+          <input type="checkbox" :key="item.checked" v-model="item.checked" @change="e => change(e, index)" />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
         </div>
       </div>
@@ -157,39 +157,25 @@ export default {
           });
           // this.unfinish.splice(cindex, 1);
         } else if (this.type == 'finish') {
-
         } else {
-
-          // this.unfinish.splice(index, 1);
+            this.finish.push(this.unfinish[index]);
+            this.unfinish.splice(index, 1);
         }
       }
       else {
-        console.log(e.target.checked)
           if (this.type == 'all') {
             this.unfinish.push(this.all[index]);
             const id = this.all[index].id;
-            //let cindex;
             const arr = this.finish.forEach((item, index) => {
               if (item.id === id) {
-                //cindex = index;
                 this.finish.splice(index, 1);
               }
             });
-            //this.unfinish.splice(index, 1);
           }
           else if (this.type == 'finish') {
-            console.log(this.finish)
             this.unfinish.push(this.finish[index]);
             this.finish.splice(index, 1);
-            //const id = this.finish[index].id;
-            //let cindex;
-            // const arr = this.finish.forEach((item, index) => {
-            //   if (item.id === id) {
-            //     //cindex = index;
-            //     this.finish.splice(index, 1);
-            //   }
-            // });
-            //this.unfinish.splice(index, 1);
+            
           }
           else {
 
