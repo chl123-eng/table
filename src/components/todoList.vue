@@ -144,6 +144,8 @@ export default {
     },
 
     change(e, index) {
+      console.log(this.unfinish);
+      console.log(this.finish);
       if (e.target.checked) {
         if (this.type == 'all') {
           this.finish.push(this.all[index]);
@@ -157,43 +159,38 @@ export default {
           });
           // this.unfinish.splice(cindex, 1);
         } else if (this.type == 'finish') {
-
         } else {
-
           // this.unfinish.splice(index, 1);
         }
-      }
-      else {
-        console.log(e.target.checked)
-          if (this.type == 'all') {
-            this.unfinish.push(this.all[index]);
-            const id = this.all[index].id;
-            //let cindex;
-            const arr = this.finish.forEach((item, index) => {
-              if (item.id === id) {
-                //cindex = index;
-                this.finish.splice(index, 1);
-              }
-            });
-            //this.unfinish.splice(index, 1);
-          }
-          else if (this.type == 'finish') {
-            console.log(this.finish)
-            this.unfinish.push(this.finish[index]);
-            this.finish.splice(index, 1);
-            //const id = this.finish[index].id;
-            //let cindex;
-            // const arr = this.finish.forEach((item, index) => {
-            //   if (item.id === id) {
-            //     //cindex = index;
-            //     this.finish.splice(index, 1);
-            //   }
-            // });
-            //this.unfinish.splice(index, 1);
-          }
-          else {
-
-          }
+      } else {
+        console.log(e.target.checked);
+        if (this.type == 'all') {
+          this.unfinish.push(this.all[index]);
+          const id = this.all[index].id;
+          //let cindex;
+          const arr = this.finish.forEach((item, index) => {
+            if (item.id === id) {
+              //cindex = index;
+              this.finish.splice(index, 1);
+            }
+          });
+          //this.unfinish.splice(index, 1);
+        } else if (this.type == 'finish') {
+          // console.log(this.finish);
+          console.log(this.finish[index]);
+          this.unfinish.push(this.finish[index]);
+          // this.finish.splice(index, 1);
+          //const id = this.finish[index].id;
+          //let cindex;
+          // const arr = this.finish.forEach((item, index) => {
+          //   if (item.id === id) {
+          //     //cindex = index;
+          //     this.finish.splice(index, 1);
+          //   }
+          // });
+          //this.unfinish.splice(index, 1);
+        } else {
+        }
       }
     },
   },
