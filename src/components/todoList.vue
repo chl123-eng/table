@@ -177,7 +177,7 @@ export default {
             //this.unfinish.splice(index, 1);
           }
           else if (this.type == 'finish') {
-            console.log(this.finish[index])
+            console.log(this.finish)
             this.unfinish.push(this.finish[index]);
             this.finish.splice(index, 1);
             //const id = this.finish[index].id;
