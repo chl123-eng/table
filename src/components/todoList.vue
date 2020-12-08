@@ -161,7 +161,9 @@ export default {
         } else {
 
         }
-      } else {
+      }
+      else {
+        console.log(e.target.checked)
           if (this.type == 'all') {
             this.unfinish.push(this.all[index]);
             const id = this.all[index].id;
@@ -175,7 +177,7 @@ export default {
             //this.unfinish.splice(index, 1);
           }
           else if (this.type == 'finish') {
-            console.log(e.target.checked)
+            console.log(this.finish[index])
             this.unfinish.push(this.finish[index]);
             this.finish.splice(index, 1);
             //const id = this.finish[index].id;
