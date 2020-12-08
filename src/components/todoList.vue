@@ -34,7 +34,7 @@
             type="checkbox"
             :key="item.checked"
             v-model="item.checked"
-            :checked="item.checked"
+            :value="true"
             @change="e => change(e, index)"
           />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
@@ -44,9 +44,10 @@
         <div class="task" :key="index" v-for="(item, index) in finish">
           <input
             type="checkbox"
-            :key="item.checked"
+            :key="item.id"
             v-model="item.checked"
             :value="true"
+            :id="true"
             @change="e => change(e, index)"
           />
           <!-- 第一个问题 -->
@@ -59,7 +60,7 @@
             type="checkbox"
             :key="item.checked"
             v-model="item.checked"
-            :value="item.checked"
+            :value="true"
             @change="e => change(e, index)"
           />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
@@ -185,10 +186,12 @@ export default {
           //   }
           // });
         } else if (this.type == 'finish') {
-          console.log(index);
           console.log(this.finish);
           this.unfinish.push(this.finish[index]);
-          // this.finish.splice(index, 1);
+          this.finish.splice(index, 1);
+          // this.finishCheck.splice(index, 1);
+          // this.finishCheck.fill(true);
+
           console.log(this.finish);
         } else {
         }
