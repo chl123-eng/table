@@ -29,15 +29,16 @@
     <div class="wrap">
       <!-- 谢树宏新增 -->
       <div v-show="type === 'all'">
-        <div class="task" :key="index" v-for="(item, index) in all">
+        <div class="task" :key="item.id" v-for="(item, index) in all">
           <input
             type="checkbox"
-            :key="item.checked"
+            :key="item.id"
             v-model="item.checked"
             :value="true"
             @change="e => change(e, index)"
           />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
+          <button class="remove" @click="remove(type,index)">删除</button>
         </div>
       </div>
       <div v-show="type === 'finish'">
@@ -46,24 +47,24 @@
             type="checkbox"
             :key="item.id"
             v-model="item.checked"
-            :value="true"
-            :id="true"
             @change="e => change(e, index)"
           />
           <!-- 第一个问题 -->
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
+          <button class="remove" @click="remove(type, index)">删除</button>
         </div>
       </div>
       <div v-show="type === 'unfinish'">
         <div class="task" :key="index" v-for="(item, index) in unfinish">
           <input
             type="checkbox"
-            :key="item.checked"
+            :key="item.id"
             v-model="item.checked"
             :value="true"
             @change="e => change(e, index)"
           />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
+          <button class="remove" @click="remove(type, index)">删除</button>
         </div>
       </div>
     </div>
@@ -165,12 +166,9 @@ export default {
           let cindex;
           const arr = this.unfinish.forEach((item, index) => {
             if (item.id === id) {
-              //cindex = index;
               this.unfinish.splice(index, 1);
             }
           });
-          console.log(this.finish);
-          // this.unfinish.splice(cindex, 1);
         } else if (this.type == 'finish') {
         } else {
           this.finish.push(this.unfinish[index]);
@@ -186,20 +184,47 @@ export default {
             }
           });
         } else if (this.type == 'finish') {
-          console.log(this.finish);
           this.unfinish.push(this.finish[index]);
           this.finish.splice(index, 1);
-<<<<<<< HEAD
-=======
-          // this.finishCheck.splice(index, 1);
-          // this.finishCheck.fill(true);
-
->>>>>>> daef33e0c34940a598014220dcf4986d8ed2546c
-          console.log(this.finish);
         } else {
         }
       }
     },
+
+    remove(type, index) {
+      // this.all.splice(index, 1)
+      if(this.type == "all"){
+        const id = this.all[index].id
+        const arr1 = this.unfinish.forEach((item, index) => {
+              if (item.id === id) {
+                this.unfinish.splice(index, 1);
+              }
+            });
+        const arr2 = this.finish.forEach((item, index) => {
+              if (item.id === id) {
+                this.finish.splice(index, 1);
+              }
+            });
+        this.all.splice(index, 1)
+      }
+      else if(this.type == "finish"){
+        const id = this.finish[index].id
+        const arr = this.all.forEach((item, index) => {
+              if (item.id === id) {
+                this.all.splice(index, 1);
+              }
+            });
+        this.finish.splice(index, 1)
+      }else {
+        const id = this.unfinish[index].id
+        const arr = this.all.forEach((item, index) => {
+              if (item.id === id) {
+                this.all.splice(index, 1);
+              }
+            });
+        this.unfinish.splice(index, 1)
+      }
+    }
   },
 };
 </script>
@@ -254,11 +279,24 @@ export default {
   height: 40px;
   line-height: 40px;
 }
+
+.task .remove {
+  float: right;
+  height: 40px;
+  line-height: 40px;
+}
+
+
 .taskActive {
   text-decoration: line-through;
   color: gray;
 }
 .taskTargetActie {
   border: 2px solid pink;
+}
+
+.img {
+  width: 100px;
+  height: 100pxs
 }
 </style>
