@@ -177,18 +177,18 @@ export default {
         }
       } else {
         if (this.type == 'all') {
-          // this.unfinish.push(this.all[index]);
-          // const id = this.all[index].id;
-          // const arr = this.finish.forEach((item, index) => {
-          //   if (item.id === id) {
-          //     this.finish.splice(index, 1);
-          //   }
-          // });
+          this.unfinish.push(this.all[index]);
+          const id = this.all[index].id;
+          const arr = this.finish.forEach((item, index) => {
+            if (item.id === id) {
+              this.finish.splice(index, 1);
+            }
+          });
         } else if (this.type == 'finish') {
           console.log(index);
           console.log(this.finish);
           this.unfinish.push(this.finish[index]);
-          // this.finish.splice(index, 1);
+          this.finish.splice(index, 1);
           console.log(this.finish);
         } else {
         }
