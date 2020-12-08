@@ -160,6 +160,7 @@ export default {
 
         } else {
 
+          // this.unfinish.splice(index, 1);
         }
       }
       else {
