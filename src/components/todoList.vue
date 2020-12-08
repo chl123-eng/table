@@ -160,7 +160,7 @@ export default {
     change(e, index) {
       if (e.target.checked) {
         if (this.type == 'all') {
-          this.finish.push(this.all[index]);
+          this.finish.push();
           const id = this.all[index].id;
           let cindex;
           const arr = this.unfinish.forEach((item, index) => {
