@@ -5,6 +5,7 @@ import box from '@/components/box'
 import third from '@/components/third'
 import four from '@/components/four'
 import todoList from '@/components/todoList'
+import newTodoList from '@/components/newTodoList'
 
 Vue.use(Router)
 
@@ -12,8 +13,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'table',
-      component: table
+      name: 'newTodoList',
+      component: newTodoList
     },
     // {
     //   path: '/box',

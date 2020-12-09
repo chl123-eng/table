@@ -12,6 +12,7 @@
       />
     </div>
     <div class="wrap taskName">
+      <div class="wrap-dd">1323</div>
       <span class="tip">{{ unfinish.length }}个任务未完成</span>
       <div class="btns">
         <div
@@ -174,7 +175,7 @@ export default {
           const id = this.unfinish[index].id;
           const arr = this.all.forEach((item, index) => {
             if (item.id === id) {
-              this.all[index].checked = true
+              this.all[index].checked = true;
             }
           });
           this.finish.push(this.unfinish[index]);
@@ -233,7 +234,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header {
   height: 50px;
   background: #cc5545;
@@ -241,6 +242,9 @@ export default {
 .wrap {
   width: 1000px;
   margin: 20px auto;
+  &-dd {
+    background-color: red;
+  }
 }
 .header .planList {
   color: #fff;
