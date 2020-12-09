@@ -38,7 +38,7 @@
             @change="e => change(e, index)"
           />
           <span :class="{ taskActive: item.checked }">{{ item.name }}</span>
-          <button class="remove" @click="remove(type,index)">删除</button>
+          <button class="remove" @click="remove(type, index)">删除</button>
         </div>
       </div>
       <div v-show="type === 'finish'">
@@ -161,7 +161,7 @@ export default {
     change(e, index) {
       if (e.target.checked) {
         if (this.type == 'all') {
-          this.finish.push();
+          this.finish.push(this.all[index]);
           const id = this.all[index].id;
           let cindex;
           const arr = this.unfinish.forEach((item, index) => {
@@ -192,38 +192,37 @@ export default {
     },
 
     remove(type, index) {
-      if(this.type == "all"){
-        const id = this.all[index].id
+      if (this.type == 'all') {
+        const id = this.all[index].id;
         const arr1 = this.unfinish.forEach((item, index) => {
-              if (item.id === id) {
-                this.unfinish.splice(index, 1);
-              }
-            });
+          if (item.id === id) {
+            this.unfinish.splice(index, 1);
+          }
+        });
         const arr2 = this.finish.forEach((item, index) => {
-              if (item.id === id) {
-                this.finish.splice(index, 1);
-              }
-            });
-        this.all.splice(index, 1)
-      }
-      else if(this.type == "finish"){
-        const id = this.finish[index].id
+          if (item.id === id) {
+            this.finish.splice(index, 1);
+          }
+        });
+        this.all.splice(index, 1);
+      } else if (this.type == 'finish') {
+        const id = this.finish[index].id;
         const arr = this.all.forEach((item, index) => {
-              if (item.id === id) {
-                this.all.splice(index, 1);
-              }
-            });
-        this.finish.splice(index, 1)
-      }else {
-        const id = this.unfinish[index].id
+          if (item.id === id) {
+            this.all.splice(index, 1);
+          }
+        });
+        this.finish.splice(index, 1);
+      } else {
+        const id = this.unfinish[index].id;
         const arr = this.all.forEach((item, index) => {
-              if (item.id === id) {
-                this.all.splice(index, 1);
-              }
-            });
-        this.unfinish.splice(index, 1)
+          if (item.id === id) {
+            this.all.splice(index, 1);
+          }
+        });
+        this.unfinish.splice(index, 1);
       }
-    }
+    },
   },
 };
 </script>
@@ -285,7 +284,6 @@ export default {
   line-height: 40px;
 }
 
-
 .taskActive {
   text-decoration: line-through;
   color: gray;
@@ -296,6 +294,6 @@ export default {
 
 .img {
   width: 100px;
-  height: 100pxs
+  height: 100pxs;
 }
 </style>
