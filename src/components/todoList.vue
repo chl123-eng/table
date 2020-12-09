@@ -171,6 +171,12 @@ export default {
           });
         } else if (this.type == 'finish') {
         } else {
+          const id = this.unfinish[index].id;
+          const arr = this.all.forEach((item, index) => {
+            if (item.id === id) {
+              this.all[index].checked = true
+            }
+          });
           this.finish.push(this.unfinish[index]);
           this.unfinish.splice(index, 1);
         }
