@@ -1,44 +1,48 @@
 <template>
   <div>
-    <div class="title1">任务计划列表</div>
-    <div class="title2">添加任务：</div>
-    <div class="input"><input type="text" placeholder="输入" v-model="msg" @keyup.enter="add()"></div>
-    <div>
-      <span class="tip">{{this.unfinish.length}}个任务未完成</span>
-      <div class="btns" v-for="(item,index) in taskType" 
-      :key="index" 
-      @click="changeType(index)"
-      :class="currentIndex == index ? 'btnActive': ''">
-        <button class="btn">{{item.name}}</button> 
-      </div>
+    <div class="title1">
+      <div class="wrap">任务计划列表</div>
     </div>
-    <div class="title3">任务列表：</div>
-    <div class="tasks">
-      <div v-show="type === 'all'">
-        <div v-for="(item,index) in all" :key="index" @change='change(index)'>
-          <input type="checkbox" 
-          :key="item.id" 
-          v-model="item.checked"/>
-          <span :class="{ 'isActive' : item.checked}">{{item.name}}</span>
-          <button @click="remove(index)">删除</button>
+    <div class="wrap">
+      <div class="title2">添加任务：</div>
+      <div class="input"><input type="text" placeholder="输入" v-model="msg" @keyup.enter="add()"></div>
+      <div>
+        <span class="tip">{{this.unfinish.length}}个任务未完成</span>
+        <div class="btns" v-for="(item,index) in taskType" 
+        :key="index" 
+        @click="changeType(index)"
+        :class="currentIndex == index ? 'btnActive': ''">
+          <button class="btn">{{item.name}}</button> 
         </div>
       </div>
-      <div v-show="type === 'finished'">
-        <div v-for="(item,index) in finished" :key="index" @change='change(index)'>
-          <input type="checkbox" 
-          :key="item.id" 
-          v-model="item.checked"/>
-          <span :class="{ 'isActive' : item.checked}">{{item.name}}</span>
-          <button @click="remove(index)">删除</button>
+      <div class="title3">任务列表：</div>
+      <div class="tasks">
+        <div v-show="type === 'all'">
+          <div v-for="(item,index) in all" :key="index" @change='change(index)'>
+            <input type="checkbox" 
+            :key="item.id" 
+            v-model="item.checked"/>
+            <span :class="{ 'isActive' : item.checked}">{{item.name}}</span>
+            <button @click="remove(index)">删除</button>
+          </div>
         </div>
-      </div>
-      <div v-show="type === 'unfinish'">
-        <div v-for="(item,index) in unfinish" :key="index" @change='change(index)'>
-          <input type="checkbox" 
-          :key="item.id" 
-          v-model="item.checked"/>
-          <span :class="{ 'isActive' : item.checked}">{{item.name}}</span>
-          <button @click="remove(index)">删除</button>
+        <div v-show="type === 'finished'">
+          <div v-for="(item,index) in finished" :key="index" @change='change(index)'>
+            <input type="checkbox" 
+            :key="item.id" 
+            v-model="item.checked"/>
+            <span :class="{ 'isActive' : item.checked}">{{item.name}}</span>
+            <button @click="remove(index)">删除</button>
+          </div>
+        </div>
+        <div v-show="type === 'unfinish'">
+          <div v-for="(item,index) in unfinish" :key="index" @change='change(index)'>
+            <input type="checkbox" 
+            :key="item.id" 
+            v-model="item.checked"/>
+            <span :class="{ 'isActive' : item.checked}">{{item.name}}</span>
+            <button @click="remove(index)">删除</button>
+          </div>
         </div>
       </div>
     </div>
@@ -120,38 +124,40 @@ export default {
       this.currentIndex = index
     },
     change(index) {
-      if(this.type == "all"){
+      if(this.type === "all"){
         if(this.all[index].checked){
           this.finished.push(this.all[index])
           const id = this.all[index].id
           for(var i = 0; i < this.unfinish.length; i++){
-            if(this.unfinish[i].id == id){
+            if(this.unfinish[i].id === id){
               this.unfinish.splice(i,1)
             }
+            break;
           }
         }else{
           this.unfinish.push(this.all[index])
           const id = this.all[index].id
           for(var i = 0; i < this.finished.length; i++){
-            if(this.finished[i].id == id){
+            if(this.finished[i].id === id){
               this.finished.splice(i,1)
             }
+            break;
           }
         }
-      }else if(this.type == "finished"){
+      }else if(this.type === "finished"){
         if(!this.finished[index].checked){
           this.unfinish.push(this.finished[index])
           this.finished.splice(index,1)
-          
         }
       }
       else {
         if(this.unfinish[index].checked){
           const id = this.unfinish[index].id
           for(var i = 0; i < this.all.length; i++){
-            if(this.all[i].id == id){
+            if(this.all[i].id === id){
               this.all[i].checked = true
             }
+            break;
           }
           this.finished.push(this.unfinish[index])
           this.unfinish.splice(index,1)
@@ -166,6 +172,7 @@ export default {
             if(this.finished[i].id == id){
               this.finished.splice(i,1)
             }
+            break;
           }
         }
         else{
@@ -173,6 +180,7 @@ export default {
             if(this.unfinish[i].id == id){
               this.unfinish.splice(i,1)
             }
+            break;
           }
         }
         this.all.splice(index,1)
@@ -182,6 +190,7 @@ export default {
           if(this.all[i].id == id){
             this.all.splice(i,1)
           }
+          break;
         }
         this.finished.splice(index,1)
       }else{
@@ -190,6 +199,7 @@ export default {
           if(this.all[i].id == id){
             this.all.splice(i,1)
           }
+          break;
         }
         this.unfinish.splice(index,1)
       }
@@ -199,7 +209,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import "varibles"
+@import '../assets/global';
+.wrap {
+  width: 1000px;
+  margin: 0 auto
+}
+.title1 {
+  background-color: $comColor;
+}
 .isActive {
   color: gray;
   text-decoration: line-through;

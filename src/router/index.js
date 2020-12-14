@@ -5,22 +5,23 @@ import Router from 'vue-router'
 // import third from '@/components/third'
 // import four from '@/components/four'
 // import todoList from '@/components/todoList'
-import newTodoList from '@/components/newTodoList'
+//import newTodoList from '@/components/newTodoList'
+import father from '@/components/father'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    // {
+    //   path: '/',
+    //   name: 'newTodoList',
+    //   component: newTodoList
+    // },
     {
       path: '/',
-      name: 'newTodoList',
-      component: newTodoList
+      name: 'father',
+      component: father
     },
-    // {
-    //   path: '/box',
-    //   name: 'box',
-    //   component: box
-    // },
     // {
     //   path: '/third',
     //   name: 'third',
