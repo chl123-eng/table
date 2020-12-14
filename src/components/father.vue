@@ -1,15 +1,9 @@
 <template>
   <div>
-    <input type="text" v-model="todoValue"/>
-    <button :click="handleBtnClick">提交</button>
-    <ul>
-      <children :key="index"
-              :content = "item"
-              :index = "index"
-              v-for="(item,index) in list"
-              @delete="handleItemDelete">
-      </children>
-    </ul>
+    <div id="show">
+      <button class="show-btn" @click="showBox">点击弹出遮罩层</button>
+    </div>
+    <children :flag="isShow" />
   </div>
 </template>
 
@@ -18,22 +12,27 @@ import children from './children'
 export default {
     data() {
       return {
-        list: [],
-        todoValue: ''
+        isShow: false
       }
     },
     components: {
         children
     },
     methods: {
-       handleBtnClick() {
-         this.list.push(this.todoValue)
-         this.todoValue = ""
-       },
-       handleItemDelete() {
-         this.list.splice(index,1);
-       }
+      showBox() {
+        this.isShow = !this.isShow
+        // this.$emit("change")
+        
+      }
     }
 }
 </script>
+
+<style>
+body {
+  background: green;
+}
+
+
+</style>
 
